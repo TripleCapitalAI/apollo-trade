@@ -240,7 +240,7 @@ function SettingsPanel({ onClose, onKeyChange }) {
   }
 
   return (
-    <div style={{ position: 'fixed', bottom: 130, right: 24, zIndex: 200, width: 320 }}>
+    <div className="fixed bottom-[130px] max-sm:bottom-[100px] right-6 max-sm:right-4 max-sm:left-4 z-[200] w-[320px] max-sm:w-auto">
       <div className="glass-strong" style={{ padding: 22 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
           <span style={{ fontSize: 14, fontWeight: 600, color: '#b4fff3' }}>API Key Settings</span>

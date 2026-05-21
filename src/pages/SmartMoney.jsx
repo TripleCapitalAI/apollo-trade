@@ -219,7 +219,7 @@ export default function SmartMoney() {
         )}
 
         {/* ── Two-column layout ──────────────────── */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: 20, alignItems: 'start' }}>
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-5 items-start">
 
           {/* Leaderboard */}
           <div>
@@ -316,7 +316,7 @@ export default function SmartMoney() {
                     View on HL <ExternalLink size={11} />
                   </a>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {[
                     { label: 'All-Time PnL',  value: fmtUsd(selected.allTimePnl),          color: selected.allTimePnl >= 0 ? '#00e676' : '#ff4d4d' },
                     { label: 'All-Time ROI',  value: `${(selected.allTimeRoi * 100).toFixed(1)}%`, color: selected.allTimeRoi >= 0 ? '#00e676' : '#ff4d4d' },

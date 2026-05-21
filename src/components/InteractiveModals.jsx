@@ -63,7 +63,7 @@ export function PrivyMockModal({ isOpen, onClose, onSuccess }) {
 
   return (
     <div style={modalOverlayStyle}>
-      <div className="glass-strong animate-fadeUp" style={{ width: 400, padding: 32, position: 'relative' }}>
+      <div className="glass-strong animate-fadeUp" style={{ width: '100%', maxWidth: 400, padding: 24, position: 'relative', margin: 16 }}>
         
         {/* Close Button */}
         <button onClick={onClose} style={closeButtonStyle}>
@@ -293,7 +293,7 @@ export function CctpBridgeModal({ isOpen, onClose }) {
 
   return (
     <div style={modalOverlayStyle}>
-      <div className="glass-strong animate-fadeUp" style={{ width: 440, padding: 32, position: 'relative' }}>
+      <div className="glass-strong animate-fadeUp" style={{ width: '100%', maxWidth: 440, padding: 24, position: 'relative', margin: 16 }}>
         
         {/* Close Button */}
         <button onClick={handleReset} style={closeButtonStyle}>
