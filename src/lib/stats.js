@@ -1,13 +1,13 @@
 /* ─── Apollo.Trade Dynamic Stats Tracker ───────────────────────────────── */
 
-const TX_VOL_KEY = 'apollo_stat_tx_volume'
-const MSG_COUNT_KEY = 'apollo_stat_msg_count'
-const USER_COUNT_KEY = 'apollo_stat_user_count'
+const TX_VOL_KEY = 'apollo_stat_tx_volume_v2'
+const MSG_COUNT_KEY = 'apollo_stat_msg_count_v2'
+const USER_COUNT_KEY = 'apollo_stat_user_count_v2'
 
 // Initial baseline stats
 const BASE_TX_VOL = 1291550 // $1,291,550
-const BASE_MSG_COUNT = 1402943
-const BASE_USER_COUNT = 124592
+const BASE_MSG_COUNT = 1500
+const BASE_USER_COUNT = 101
 
 export function getTxVolume() {
   const stored = localStorage.getItem(TX_VOL_KEY)
@@ -56,3 +56,11 @@ export function incrementUserCount() {
   localStorage.setItem(USER_COUNT_KEY, updated.toString())
   return updated
 }
+
+// Automatically increment Active User count on every website visit (page load)
+try {
+  incrementUserCount()
+} catch (e) {
+  console.warn('Failed to increment visitor count:', e)
+}
+

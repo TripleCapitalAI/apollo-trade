@@ -13,7 +13,7 @@ const QUICK_PROMPTS = [
 ]
 
 function TractionStats() {
-  const [stats, setStats] = useState({ txVol: 1291550, msgCount: 1402943, userCount: 124592 })
+  const [stats, setStats] = useState({ txVol: 1291550, msgCount: 1500, userCount: 101 })
 
   useEffect(() => {
     setStats({
@@ -21,21 +21,6 @@ function TractionStats() {
       msgCount: getMsgCount(),
       userCount: getUserCount()
     })
-
-    const interval = setInterval(() => {
-      setStats(prev => {
-        const nextUserCount = prev.userCount + (Math.random() > 0.8 ? 1 : 0)
-        if (nextUserCount !== prev.userCount) {
-          localStorage.setItem('apollo_stat_user_count', nextUserCount.toString())
-        }
-        return {
-          ...prev,
-          userCount: nextUserCount
-        }
-      })
-    }, 10000)
-
-    return () => clearInterval(interval)
   }, [])
 
   return (
