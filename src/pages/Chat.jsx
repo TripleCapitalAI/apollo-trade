@@ -8,6 +8,7 @@ import {
   getActiveKey, getUserKey, setUserKey, canChat,
   getRemainingFree, incrementUsage, FREE_LIMIT,
 } from '../lib/apikey.js'
+import { incrementMsgCount } from '../lib/stats.js'
 
 const QUICK_PROMPTS = [
   { icon: TrendingUp, text: 'Highest funding rate opportunities now?' },
@@ -318,6 +319,7 @@ export default function Chat() {
     const newMessages = [...messages, { role: 'user', content: trimmed }]
     setMessages(newMessages)
     setInput('')
+    incrementMsgCount()
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto'
     }
@@ -342,6 +344,7 @@ export default function Chat() {
       )
       setMessages(prev => [...prev, { role: 'assistant', content: full }])
       setStreaming('')
+      incrementMsgCount()
     } catch (err) {
       const errMsg = err.message?.includes('quota') || err.message?.includes('429')
         ? '⚠️ API quota exhausted. Please add your own API Key in settings.'

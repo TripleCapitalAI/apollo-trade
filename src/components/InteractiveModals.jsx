@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { X, Mail, Chrome, Shield, ArrowRight, CheckCircle, Smartphone, HelpCircle } from 'lucide-react'
+import { addTxVolume } from '../lib/stats.js'
 
 /**
  * PrivyMockModal Component
@@ -266,10 +267,14 @@ export function CctpBridgeModal({ isOpen, onClose }) {
     if (step === 'bridging' && bridgeStep === 4) {
       const successTimer = setTimeout(() => {
         setStep('success')
+        const val = parseFloat(amount)
+        if (!isNaN(val)) {
+          addTxVolume(val)
+        }
       }, 1000)
       return () => clearTimeout(successTimer)
     }
-  }, [step, bridgeStep])
+  }, [step, bridgeStep, amount])
 
   if (!isOpen) return null
 

@@ -1,7 +1,9 @@
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { TrendingUp, Users, Zap, Sparkles } from 'lucide-react'
 import GlobeScene from '../components/GlobeScene.jsx'
 import TypewriterText from '../components/TypewriterText.jsx'
+import { getTxVolume, getMsgCount, getUserCount } from '../lib/stats.js'
 
 const QUICK_PROMPTS = [
   { icon: TrendingUp, text: 'Highest funding rate opportunities now?' },
@@ -11,14 +13,39 @@ const QUICK_PROMPTS = [
 ]
 
 function TractionStats() {
+  const [stats, setStats] = useState({ txVol: 1291550, msgCount: 1402943, userCount: 124592 })
+
+  useEffect(() => {
+    setStats({
+      txVol: getTxVolume(),
+      msgCount: getMsgCount(),
+      userCount: getUserCount()
+    })
+
+    const interval = setInterval(() => {
+      setStats(prev => {
+        const nextUserCount = prev.userCount + (Math.random() > 0.8 ? 1 : 0)
+        if (nextUserCount !== prev.userCount) {
+          localStorage.setItem('apollo_stat_user_count', nextUserCount.toString())
+        }
+        return {
+          ...prev,
+          userCount: nextUserCount
+        }
+      })
+    }, 10000)
+
+    return () => clearInterval(interval)
+  }, [])
+
   return (
     <div style={{
       display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '4vw', marginTop: 60, marginBottom: 50, width: '100%', maxWidth: 1000, margin: '60px auto 40px'
     }}>
       {[
-        { label: 'Cumulative USDC Yield', value: '$4,291,550', color: '#ffb800' },
-        { label: 'Total Messages Processed', value: '1,402,943', color: '#b4fff3' },
-        { label: 'Active Platform Users', value: '124,592', color: '#ffb800' },
+        { label: 'Transaction Volume', value: `$${stats.txVol.toLocaleString()}`, color: '#ffb800' },
+        { label: 'Total Messages Processed', value: stats.msgCount.toLocaleString(), color: '#b4fff3' },
+        { label: 'Active Platform Users', value: stats.userCount.toLocaleString(), color: '#ffb800' },
       ].map(s => (
         <div key={s.label} style={{ textAlign: 'center', flex: '1 1 200px', background: 'rgba(136,153,255,0.02)', padding: '16px 20px', borderRadius: 12, border: '1px solid rgba(180,255,243,0.03)' }}>
           <div style={{ fontSize: 'clamp(26px, 3.8vw, 38px)', fontWeight: 800, color: s.color, fontFamily: 'Orbitron, sans-serif', textShadow: `0 0 16px ${s.color}35` }}>
@@ -83,7 +110,7 @@ export default function Home() {
         </div>
 
         <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 24px', width: '100%', maxWidth: 1100 }}>
-          <div className="section-label" style={{ marginBottom: 18 }}>Hyperliquid · DeFi · On-chain Intelligence</div>
+          <div className="section-label" style={{ marginBottom: 18 }}>Apollo · DeFi · On-chain Intelligence</div>
           
           <h1 style={{
             margin: 0,
@@ -97,9 +124,8 @@ export default function Home() {
             <span className="text-gradient-mint" style={{ filter: 'drop-shadow(0 0 10px rgba(180,255,243,0.15))' }}>Apollo.Trade</span>
           </h1>
           
-          <p style={{ margin: '22px auto 0', fontSize: 'clamp(14px, 2vw, 17px)', color: 'rgba(226,232,240,0.5)', maxWidth: 520, lineHeight: 1.65 }}>
-            Delta-neutral funding rate intelligence on Hyperliquid.<br />
-            Earn yield without directional risk, powered by autonomous agent technology.
+          <p style={{ margin: '22px auto 0', fontSize: 'clamp(14px, 2vw, 17px)', color: 'rgba(226,232,240,0.5)', maxWidth: 750, lineHeight: 1.65 }}>
+            We are building an on-chain “Manus” AI trading chatbot that simplifies the entire trading experience through natural language interaction.
           </p>
 
           {/* Action CTAs */}

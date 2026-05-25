@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { BarChart2, Brain, Home, ExternalLink, Sparkles, LogOut, Menu, X } from 'lucide-react'
 import { PrivyMockModal, CctpBridgeModal } from './InteractiveModals.jsx'
+import { incrementUserCount } from '../lib/stats.js'
 
 const NAV = [
   { to: '/',            label: 'Home',        Icon: Home      },
@@ -19,6 +20,7 @@ export default function Navbar() {
 
   function handleConnectWallet(address) {
     setWalletAddress(address)
+    incrementUserCount()
   }
 
   function handleDisconnect() {
